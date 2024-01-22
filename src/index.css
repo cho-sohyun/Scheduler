@@ -4,25 +4,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
 
 body {
-  background-color: #f2f2f2;
-}
-
-.container {
-  max-width: 720px;
-  min-height: 100vh;
-  margin: 0px auto;
-  width: 100%;
-  background-color: rgb(255, 255, 255);
-  padding: 15px;
-}
-
-@media screen and (max-width: 600px) {
-  .container {
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-}
-
-body {
   font-family: 'Noto Sans KR', sans-serif;
 }

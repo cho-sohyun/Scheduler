@@ -1,12 +1,20 @@
 import React from 'react';
 import './App.css';
-import TodoList from './components/TodoList';
+import { Provider } from 'react-redux';
+import store from '../src/store/store';
+import Main from './pages/Main';
+import Header from './pages/Header';
 
 function App() {
   return (
-    <>
-      <TodoList />
-    </>
+    <Provider store={store}>
+      <div className="wrap">
+        <div className="container">
+          <Header />
+          <Main />
+        </div>
+      </div>
+    </Provider>
   );
 }
 
