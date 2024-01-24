@@ -29,12 +29,12 @@ function TodoList() {
   }, [isOpen]);
 
   return (
-    <div className="mt-4 flex flex-col justify-center items-center">
+    <div className="mt-5 flex flex-col justify-center items-center">
       <ul className="w-full flex flex-col items-center">
         {todos.map((todo, index) => (
           <li
             key={index}
-            className={`w-[400px] h-[50px] flex justify-between items-center mt-2 p-2 pl-3 text-center text-black text-sm rounded-md opacity-70 ${todo.color}`}
+            className={`w-[400px] h-[50px] flex justify-between items-center mt-2 p-2 pl-3 text-center text-black text-sm rounded-md opacity-60 ${todo.color}`}
           >
             <div className="flex flex-col justify-center items-start">
               <p
@@ -63,7 +63,7 @@ function TodoList() {
           type="text"
           value={todo}
           onChange={(e) => setTodo(e.target.value)}
-          className={`w-[400px] h-[48px] flex justify-center items-center mt-4 p-2 text-sm text-black font-normal ${color} border border-gray-200 rounded-md outline-none`}
+          className={`w-[400px] h-[48px] flex justify-center items-center mt-4 p-2 text-sm text-black font-normal ${color} opacity-70 border border-gray-200 rounded-md outline-none`}
           placeholder="+ 할 일을 추가하세요"
           onClick={() => {
             // 모달이 이미 열려있지 않은 경우에만 모달을 연다.
