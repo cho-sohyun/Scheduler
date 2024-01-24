@@ -1,4 +1,5 @@
 import React from 'react';
+import { AiOutlineClose } from 'react-icons/ai';
 
 interface Props {
   isOpen: boolean;
@@ -17,33 +18,30 @@ const SelectTagModal: React.FC<Props> = ({ isOpen, onClose, onSelect }) => {
 
   return (
     <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white w-[400px] p-4 rounded-xl">
+      <div className="bg-white w-[420px] h-[180px] p-4 rounded-xl modal-box ">
+        <button
+          onClick={onClose}
+          className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+        >
+          <AiOutlineClose />
+        </button>
         <h2 className="text-sm font-bold mb-5">태그 선택</h2>
         <div className="flex justify-around mb-4">
           {tagOptions.map((tag) => (
             <div
               key={tag.name}
+              onClick={() => onSelect(tag.name, tag.color)}
               className="w-[80px] h-[80px] flex flex-col justify-center items-center p-2 rounded-md bg-gray-100"
             >
               <button
-                onClick={() => onSelect(tag.name, tag.color)}
                 className={`w-[20px] h-[20px] p-2 rounded-full ${tag.color}`}
               />
-              <p
-                onClick={() => onSelect(tag.name, tag.color)}
-                className="text-center text-sm text-[#13133d] text-nowrap mt-1"
-              >
+              <p className="text-center text-sm text-[#13133d] text-nowrap mt-1 cursor-pointer">
                 {tag.name}
               </p>
             </div>
           ))}
         </div>
-        <button
-          onClick={onClose}
-          className="block w-full text-center p-2 border border-gray-300 rounded-md"
-        >
-          취소
-        </button>
       </div>
     </div>
   );

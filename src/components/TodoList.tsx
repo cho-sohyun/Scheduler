@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
-import { addTodo } from '../store/todosSlice';
+import { addTodo, toggleTodo } from '../store/todosSlice';
 import SelectTagModal from './SelectTagModal';
 
 function TodoList() {
@@ -16,7 +16,7 @@ function TodoList() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (todo !== '') {
-      dispatch(addTodo({ text: todo, tag, color }));
+      dispatch(addTodo({ text: todo, tag, color, completed: false }));
       setTodo('');
     }
   };
@@ -34,10 +34,26 @@ function TodoList() {
         {todos.map((todo, index) => (
           <li
             key={index}
-            className={`w-[420px] h-[50px] flex flex-col items-start justify-start mt-2 p-2 text-center text-sm rounded-md opacity-70 ${todo.color}`}
+            className={`w-[400px] h-[50px] flex justify-between items-center mt-2 p-2 pl-3 text-center text-black text-sm rounded-md opacity-70 ${todo.color}`}
           >
-            <p className="text-xs text-[#4e4e4e]">{todo.tag}</p>
-            {todo.text}
+            <div className="flex flex-col justify-center items-start">
+              <p
+                className={`text-xs ${todo.completed ? 'text-gray-400' : 'text-black'}`}
+              >
+                {todo.tag}
+              </p>
+              <span
+                className={`${todo.completed ? 'text-gray-400' : 'text-black'}`}
+              >
+                {todo.text}
+              </span>
+            </div>
+            <input
+              type="checkbox"
+              checked={todo.completed}
+              onChange={() => dispatch(toggleTodo(todo.id))}
+              className="mr-2 checkbox border-gray-500"
+            />
           </li>
         ))}
       </ul>
@@ -47,7 +63,7 @@ function TodoList() {
           type="text"
           value={todo}
           onChange={(e) => setTodo(e.target.value)}
-          className="w-[420px] h-[48px] flex justify-center items-center mt-4 p-2 text-sm font-normal bg-gray-200 border border-gray-200 rounded-md outline-none"
+          className={`w-[400px] h-[48px] flex justify-center items-center mt-4 p-2 text-sm text-black font-normal ${color} border border-gray-200 rounded-md outline-none`}
           placeholder="+ 할 일을 추가하세요"
           onClick={() => {
             // 모달이 이미 열려있지 않은 경우에만 모달을 연다.

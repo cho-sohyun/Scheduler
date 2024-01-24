@@ -5,6 +5,7 @@ interface Todo {
   text: string;
   tag: string;
   color: string;
+  completed: boolean;
 }
 
 const initialState: Todo[] = [];
@@ -13,20 +14,21 @@ const todosSlice = createSlice({
   name: 'todos',
   initialState,
   reducers: {
-    addTodo: (
-      state,
-      action: PayloadAction<{ text: string; tag: string; color: string }>
-    ) => {
-      state.push({
-        id: Date.now(),
-        text: action.payload.text,
-        tag: action.payload.tag,
-        color: action.payload.color
-      });
+    addTodo: {
+      reducer: (state, action: PayloadAction<Omit<Todo, 'id'>>) => {
+        state.push({ id: Date.now(), ...action.payload, completed: false });
+      },
+      prepare: (todo: Omit<Todo, 'id'>) => ({ payload: todo })
+    },
+    toggleTodo: (state, action: PayloadAction<number>) => {
+      const todo = state.find((todo) => todo.id === action.payload);
+      if (todo) {
+        todo.completed = !todo.completed;
+      }
     }
   }
 });
 
-export const { addTodo } = todosSlice.actions;
+export const { addTodo, toggleTodo } = todosSlice.actions;
 
 export default todosSlice.reducer;
