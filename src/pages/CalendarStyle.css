@@ -1,6 +1,7 @@
 .react-calendar {
   background-color: white;
   border-radius: 20px;
+  width: 100%;
 }
 
 .react-calendar__navigation__label {

@@ -26,7 +26,15 @@ function CalendarPage() {
   };
 
   return (
-    <div className="min-h-screen">
+    <div
+      style={{
+        height: '700px',
+        overflow: 'auto',
+        scrollbarWidth: 'none',
+        msOverflowStyle: 'none'
+      }}
+      className="scrollbar-hide"
+    >
       <Calendar
         locale="ko-KR"
         formatDay={formatDay}
