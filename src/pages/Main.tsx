@@ -29,7 +29,17 @@ function Main() {
         <p className="ml-4 text-sm">
           {date} ({day})
         </p>
-        <TodoList />
+        <div
+          style={{
+            height: '500px',
+            overflow: 'auto',
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none'
+          }}
+          className="scrollbar-hide"
+        >
+          <TodoList />
+        </div>
       </div>
     </div>
   );

@@ -13,3 +13,7 @@
 body {
   font-family: 'GmarketSansMedium';
 }
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
