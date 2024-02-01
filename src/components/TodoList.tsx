@@ -3,11 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import { addTodo, editTodo, toggleTodo, deleteTodo } from '../store/todosSlice';
 import SelectTagModal from './SelectTagModal';
-import { RiDeleteBack2Fill } from 'react-icons/ri';
 
 function TodoList() {
   const dispatch = useDispatch();
-  const todos = useSelector((state: RootState) => state.todos);
+  const todos = useSelector((state: RootState) => state.todos.todos);
+  const selectedDate = useSelector(
+    (state: RootState) => state.todos.selectedDate
+  );
   const [todo, setTodo] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [tag, setTag] = useState('');
@@ -103,10 +105,7 @@ function TodoList() {
           onChange={(e) => setTodo(e.target.value)}
           className={`w-[400px] h-[48px] flex justify-center items-center mt-4 p-2 text-sm text-black font-normal ${color} opacity-70 border border-gray-200 rounded-md outline-none`}
           placeholder="+ 할 일을 추가하세요"
-          onClick={() => {
-            // 모달이 이미 열려있지 않은 경우에만 모달을 연다.
-            if (!isOpen) setIsOpen(true);
-          }}
+          onClick={() => setIsOpen(true)}
         />
       </form>
       <SelectTagModal

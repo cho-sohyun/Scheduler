@@ -6,10 +6,18 @@ export interface Todo {
   tag: string;
   color: string;
   completed: boolean;
-  date: Date;
+  date: string;
 }
 
-const initialState: Todo[] = [];
+interface TodosState {
+  todos: Todo[];
+  selectedDate: string | null;
+}
+
+const initialState: TodosState = {
+  todos: [],
+  selectedDate: null
+};
 
 const todosSlice = createSlice({
   name: 'todos',
@@ -17,9 +25,9 @@ const todosSlice = createSlice({
   reducers: {
     addTodo: {
       reducer: (state, action: PayloadAction<Omit<Todo, 'id' | 'date'>>) => {
-        state.push({
+        state.todos.push({
           id: Date.now(),
-          date: new Date(),
+          date: state.selectedDate || new Date().toISOString(),
           ...action.payload,
           completed: false
         });
@@ -27,26 +35,30 @@ const todosSlice = createSlice({
       prepare: (todo: Omit<Todo, 'id' | 'date'>) => ({ payload: todo })
     },
     toggleTodo: (state, action: PayloadAction<number>) => {
-      const todo = state.find((todo) => todo.id === action.payload);
+      const todo = state.todos.find((todo) => todo.id === action.payload);
       if (todo) {
         todo.completed = !todo.completed;
       }
     },
     deleteTodo: (state, action: PayloadAction<number>) => {
-      const index = state.findIndex((todo) => todo.id === action.payload);
+      const index = state.todos.findIndex((todo) => todo.id === action.payload);
       if (index !== -1) {
-        state.splice(index, 1);
+        state.todos.splice(index, 1);
       }
     },
     editTodo: (state, action: PayloadAction<{ id: number; text: string }>) => {
-      const todo = state.find((todo) => todo.id === action.payload.id);
+      const todo = state.todos.find((todo) => todo.id === action.payload.id);
       if (todo) {
         todo.text = action.payload.text;
       }
+    },
+    setSelectedDate: (state, action: PayloadAction<string>) => {
+      state.selectedDate = action.payload;
     }
   }
 });
 
-export const { addTodo, toggleTodo, deleteTodo, editTodo } = todosSlice.actions;
+export const { addTodo, toggleTodo, deleteTodo, editTodo, setSelectedDate } =
+  todosSlice.actions;
 
 export default todosSlice.reducer;
