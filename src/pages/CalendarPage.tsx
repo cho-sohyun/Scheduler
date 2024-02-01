@@ -61,7 +61,10 @@ function CalendarPage() {
         <div className="flex flex-col items-center">
           <div className="mt-2">
             {todosForThisDate.map((todo: Todo) => (
-              <div key={todo.id} className={`p-1 rounded ${todo.color} mt-1`}>
+              <div
+                key={todo.id}
+                className={`p-1 rounded ${todo.color} mt-1 ${todo.completed ? 'opacity-40' : 'text-black'}`}
+              >
                 <p className="text-[10px] text-nowrap">
                   {todo.text.substring(0, 5)}
                 </p>
