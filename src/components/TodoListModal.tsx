@@ -61,69 +61,78 @@ function TodoListModal({ selectedDate }: TodoListModalProps) {
   return (
     <div
       style={{
-        height: '500px',
-        overflow: 'auto',
-        scrollbarWidth: 'none',
-        msOverflowStyle: 'none'
+        display: 'flex',
+        flexDirection: 'column',
+        height: '500px'
       }}
-      className="scrollbar-hide"
     >
-      <div className="mt-5 flex flex-col justify-center items-center">
-        <ul className="w-full flex flex-col items-center">
-          {filteredTodos.map((todo, index) => (
-            <li
-              key={index}
-              className={` w-[380px] h-[50px] flex justify-between items-center mt-2 p-2 pl-3 text-center text-black text-sm rounded-md opacity-60 ${todo.color}`}
-            >
-              {editId === todo.id ? (
-                <input
-                  className={`h-[42px] text-sm text-black font-normal ${todo.color} rounded-md outline-none `}
-                  value={editText}
-                  onChange={(e) => setEditText(e.target.value)}
-                />
-              ) : (
-                <div className="flex flex-col justify-center items-start cursor-pointer">
-                  <p
-                    className={`text-xs ${todo.completed ? 'text-gray-400' : 'text-black'}`}
-                  >
-                    {todo.tag}
-                  </p>
-                  <span
-                    className={`${todo.completed ? 'text-gray-400' : 'text-black'}`}
-                    onClick={() => handleEdit(todo.id, todo.text)}
-                  >
-                    {todo.text}
-                  </span>
-                </div>
-              )}
-              <div>
+      <div
+        style={{
+          overflow: 'auto',
+          scrollbarWidth: 'none',
+          msOverflowStyle: 'none'
+        }}
+        className="scrollbar-hide mt-5 flex-grow"
+      >
+        <div className="flex flex-col justify-center items-center">
+          <ul className="w-full flex flex-col items-center">
+            {filteredTodos.map((todo, index) => (
+              <li
+                key={index}
+                className={` w-[380px] h-[50px] flex justify-between items-center mt-2 p-2 pl-3 text-center text-black text-sm rounded-md opacity-60 ${todo.color}`}
+              >
                 {editId === todo.id ? (
-                  <>
-                    <button
-                      className="mr-2"
-                      onClick={() => handleSave(todo.id)}
-                    >
-                      수정
-                    </button>
-                    <button
-                      className="mr-2"
-                      onClick={() => dispatch(deleteTodo(todo.id))}
-                    >
-                      삭제
-                    </button>
-                  </>
-                ) : (
                   <input
-                    type="checkbox"
-                    checked={todo.completed}
-                    onChange={() => dispatch(toggleTodo(todo.id))}
-                    className="mr-2 mt-1 checkbox border-gray-500"
+                    className={`h-[42px] text-sm text-black font-normal ${todo.color} rounded-md outline-none `}
+                    value={editText}
+                    onChange={(e) => setEditText(e.target.value)}
                   />
+                ) : (
+                  <div className="flex flex-col justify-center items-start cursor-pointer">
+                    <p
+                      className={`text-xs ${todo.completed ? 'text-gray-400' : 'text-black'}`}
+                    >
+                      {todo.tag}
+                    </p>
+                    <span
+                      className={`${todo.completed ? 'text-gray-400' : 'text-black'}`}
+                      onClick={() => handleEdit(todo.id, todo.text)}
+                    >
+                      {todo.text}
+                    </span>
+                  </div>
                 )}
-              </div>
-            </li>
-          ))}
-        </ul>
+                <div>
+                  {editId === todo.id ? (
+                    <>
+                      <button
+                        className="mr-2"
+                        onClick={() => handleSave(todo.id)}
+                      >
+                        수정
+                      </button>
+                      <button
+                        className="mr-2"
+                        onClick={() => dispatch(deleteTodo(todo.id))}
+                      >
+                        삭제
+                      </button>
+                    </>
+                  ) : (
+                    <input
+                      type="checkbox"
+                      checked={todo.completed}
+                      onChange={() => dispatch(toggleTodo(todo.id))}
+                      className="mr-2 mt-1 checkbox border-gray-500"
+                    />
+                  )}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <div className="w-full flex justify-center">
         <form
           onSubmit={handleSubmit}
           className="mb-4 w-full flex justify-center"
@@ -133,7 +142,7 @@ function TodoListModal({ selectedDate }: TodoListModalProps) {
             type="text"
             value={todo}
             onChange={(e) => setTodo(e.target.value)}
-            className={`w-[380px] h-[48px] flex justify-center items-center mt-10 p-2 text-sm text-black font-normal ${color} opacity-70 border border-gray-200 rounded-md outline-none`}
+            className={`w-[380px] h-[48px] mt-10 p-2 text-sm text-black font-normal ${color} opacity-70 border border-gray-200 rounded-md outline-none`}
             placeholder="+ 할 일을 추가하세요"
             onClick={() => setIsOpen(true)}
           />
