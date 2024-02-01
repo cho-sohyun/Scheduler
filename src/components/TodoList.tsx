@@ -47,16 +47,16 @@ function TodoList() {
         {todos.map((todo, index) => (
           <li
             key={index}
-            className={`w-[400px] h-[50px] flex justify-between items-center mt-2 p-2 pl-3 text-center text-black text-sm rounded-md opacity-60 ${todo.color}`}
+            className={` w-[400px] h-[50px] flex justify-between items-center mt-2 p-2 pl-3 text-center text-black text-sm rounded-md opacity-60 ${todo.color}`}
           >
             {editId === todo.id ? (
               <input
-                className={`h-[42px] text-sm text-black font-normal ${todo.color} rounded-md outline-none`}
+                className={`h-[42px] text-sm text-black font-normal ${todo.color} rounded-md outline-none `}
                 value={editText}
                 onChange={(e) => setEditText(e.target.value)}
               />
             ) : (
-              <div className="flex flex-col justify-center items-start">
+              <div className="flex flex-col justify-center items-start cursor-pointer">
                 <p
                   className={`text-xs ${todo.completed ? 'text-gray-400' : 'text-black'}`}
                 >

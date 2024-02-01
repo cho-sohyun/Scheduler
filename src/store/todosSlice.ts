@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface Todo {
+export interface Todo {
   id: number;
   text: string;
   tag: string;
   color: string;
   completed: boolean;
+  date: Date;
 }
 
 const initialState: Todo[] = [];
@@ -15,10 +16,15 @@ const todosSlice = createSlice({
   initialState,
   reducers: {
     addTodo: {
-      reducer: (state, action: PayloadAction<Omit<Todo, 'id'>>) => {
-        state.push({ id: Date.now(), ...action.payload, completed: false });
+      reducer: (state, action: PayloadAction<Omit<Todo, 'id' | 'date'>>) => {
+        state.push({
+          id: Date.now(),
+          date: new Date(),
+          ...action.payload,
+          completed: false
+        });
       },
-      prepare: (todo: Omit<Todo, 'id'>) => ({ payload: todo })
+      prepare: (todo: Omit<Todo, 'id' | 'date'>) => ({ payload: todo })
     },
     toggleTodo: (state, action: PayloadAction<number>) => {
       const todo = state.find((todo) => todo.id === action.payload);
