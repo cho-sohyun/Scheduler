@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import SelectTagModal from './SelectTagModal';
 import { useRecoilState } from 'recoil';
 import { editTextState, todoState, editIdState } from '../atom/RecoilAtoms';
+import DatePickerModal from '../components/DatePicker';
 
 function TodoList() {
   const [todo, setTodo] = useRecoilState(todoState);
@@ -12,6 +13,8 @@ function TodoList() {
   const [color, setColor] = useState('bg-gray-200');
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputText, setInputText] = useState('');
+  const [isDatePickerOpen, setDatePickerOpen] = useState(false);
+  const [editingDateId, setEditingDateId] = useState<number | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -61,6 +64,12 @@ function TodoList() {
     );
   };
 
+  const handleDateChange = (id: number, date: Date) => {
+    setTodo(todo.map((todo) => (todo.id === id ? { ...todo, date } : todo)));
+    setDatePickerOpen(false);
+    setEditingDateId(null);
+  };
+
   return (
     <div className="mt-5 flex flex-col justify-center items-center">
       <ul className="w-full flex flex-col items-center">
@@ -95,6 +104,15 @@ function TodoList() {
                 <>
                   <button className="mr-2" onClick={() => handleSave(todo.id)}>
                     수정
+                  </button>
+                  <button
+                    className="mr-2"
+                    onClick={() => {
+                      setDatePickerOpen(true);
+                      setEditingDateId(todo.id);
+                    }}
+                  >
+                    날짜
                   </button>
                   <button
                     className="mr-2"
@@ -133,6 +151,16 @@ function TodoList() {
           setTag(selectedTag);
           setColor(selectedColor);
           setIsOpen(false);
+        }}
+      />
+      <DatePickerModal
+        isOpen={isDatePickerOpen}
+        onClose={() => setDatePickerOpen(false)}
+        selectedDate={todo.find((item) => item.id === editingDateId)?.date}
+        onDateChange={(date: Date) => {
+          if (editingDateId !== null) {
+            handleDateChange(editingDateId, date);
+          }
         }}
       />
     </div>

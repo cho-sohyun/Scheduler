@@ -10,6 +10,7 @@ function CalendarPage() {
   const [date, setDate] = useRecoilState(dateState);
   const [showModal, setShowModal] = useRecoilState(showModalState);
   const [todos] = useRecoilState(todoState);
+  console.log(todos);
 
   // 날짜를 클릭했을 때 date 상태에 설정 -> 모달 true
   const onClickDay = (date: Date) => {

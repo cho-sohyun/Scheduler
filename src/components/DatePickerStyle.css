@@ -1,0 +1,71 @@
+.react-datepicker-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.react-datepicker__input-container {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.react-datepicker {
+  width: 400px !important;
+  height: 200px !important;
+  border: none !important;
+}
+
+.react-datepicker__header {
+  width: 400px !important;
+  border-bottom: none !important;
+  background: white !important;
+  margin-top: 12px;
+}
+
+.react-datepicker__current-month {
+  font-size: 18px !important;
+  font-weight: 500 !important;
+}
+
+.react-datepicker__navigation {
+  align-items: center;
+  background: none;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  position: absolute;
+  top: 18px !important;
+  padding: 0;
+  border: none;
+  z-index: 1;
+  height: 32px;
+  width: 32px;
+  text-indent: -999em;
+  overflow: hidden;
+}
+
+.react-datepicker__day-names {
+  font-size: 12px !important;
+  margin-top: 20px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* 요일 */
+.react-datepicker__day-name {
+  font-size: 14px !important;
+  width: 50px !important;
+  font-weight: 400 !important;
+  color: #aaaaaa !important;
+}
+
+/* 일자*/
+.react-datepicker__day {
+  font-size: 16px !important;
+  width: 50px !important;
+  padding: 4px !important;
+  font-weight: 400 !important;
+}

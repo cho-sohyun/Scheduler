@@ -9,6 +9,9 @@ import {
   isOpenState,
   Todo
 } from '../atom/RecoilAtoms';
+import 'react-datepicker/dist/react-datepicker.css';
+import './DatePickerStyle.css';
+import DatePickerModal from './DatePicker';
 
 function TodoListModal() {
   const [selectedDate, setSelectedDate] = useRecoilState(
@@ -23,6 +26,8 @@ function TodoListModal() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputText, setInputText] = useState('');
   const [filteredTodos, setFilteredTodos] = useState<Todo[]>([]);
+  const [isDatePickerOpen, setDatePickerOpen] = useState(false);
+  const [editingDateId, setEditingDateId] = useState<number | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -94,6 +99,12 @@ function TodoListModal() {
     );
   };
 
+  const handleDateChange = (id: number, date: Date) => {
+    setTodo(todo.map((todo) => (todo.id === id ? { ...todo, date } : todo)));
+    setDatePickerOpen(false);
+    setEditingDateId(null);
+  };
+
   return (
     <div
       style={{
@@ -149,6 +160,15 @@ function TodoListModal() {
                       </button>
                       <button
                         className="mr-2"
+                        onClick={() => {
+                          setDatePickerOpen(true);
+                          setEditingDateId(todo.id);
+                        }}
+                      >
+                        날짜
+                      </button>
+                      <button
+                        className="mr-2"
                         onClick={() => handleDelete(todo.id)}
                       >
                         삭제
@@ -195,6 +215,16 @@ function TodoListModal() {
           }}
         />
       </div>
+      <DatePickerModal
+        isOpen={isDatePickerOpen}
+        onClose={() => setDatePickerOpen(false)}
+        selectedDate={todo.find((item) => item.id === editingDateId)?.date}
+        onDateChange={(date: Date) => {
+          if (editingDateId !== null) {
+            handleDateChange(editingDateId, date);
+          }
+        }}
+      />
     </div>
   );
 }
