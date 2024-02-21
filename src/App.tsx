@@ -8,7 +8,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
 
-const { persistAtom } = recoilPersist({
+recoilPersist({
   key: 'recoil-persist',
   storage: localStorage
 });
@@ -22,8 +22,8 @@ function App() {
             <Header />
             <Routes>
               <Route path="/" element={<Main />} />
-              {/* <Route path="/profile" element={<Profile />} /> */}
               <Route path="/calendar" element={<Calendar />} />
+              {/* <Route path="/profile" element={<Profile />} /> */}
             </Routes>
             <Footer />
           </div>

@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import SelectTagModal from './SelectTagModal';
 import { useRecoilState } from 'recoil';
 import { editTextState, todoState, editIdState } from '../atom/RecoilAtoms';
-import { useLocalStorageRecoilState } from '../utils/useLocalStorageRecoilState';
 
 function TodoList() {
   const [todo, setTodo] = useRecoilState(todoState);

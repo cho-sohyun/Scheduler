@@ -9,7 +9,7 @@ import { dateState, showModalState, todoState } from '../atom/RecoilAtoms';
 function CalendarPage() {
   const [date, setDate] = useRecoilState(dateState);
   const [showModal, setShowModal] = useRecoilState(showModalState);
-  const [todos, setTodos] = useRecoilState(todoState);
+  const [todos] = useRecoilState(todoState);
 
   // 날짜를 클릭했을 때 date 상태에 설정 -> 모달 true
   const onClickDay = (date: Date) => {

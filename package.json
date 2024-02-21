@@ -30,8 +30,10 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "prepare": "npm run build:css && react-scripts start",
-    "build:css": "postcss src/index.css -o src/tailwind.css"
+    "prepare": "npm run build:css && react-scripts build",
+    "build:css": "postcss src/index.css -o src/tailwind.css",
+    "deploy": "gh-pages -d build",
+    "predeploy": "npm run build"
   },
   "eslintConfig": {
     "extends": [
@@ -58,5 +60,5 @@
     "eslint-config-prettier": "^9.1.0",
     "prettier": "^3.2.4"
   },
-  "homepage": "https://"
+  "homepage": "https://cho-sohyun.github.io/Scheduler"
 }
