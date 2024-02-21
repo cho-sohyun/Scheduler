@@ -1,22 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Calendar from 'react-calendar';
 import './CalendarStyle.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../store/store';
-import { Todo, setSelectedDate } from '../store/todosSlice';
 import Modal from '../components/Modal';
 import TodoListModal from '../components/TodoListModal';
+import { useRecoilState } from 'recoil';
+import { dateState, showModalState, todoState } from '../atom/RecoilAtoms';
 
 function CalendarPage() {
-  const [date, setDate] = useState(new Date());
-  const todos = useSelector((state: RootState) => state.todos.todos);
-  const [showModal, setShowModal] = useState(false);
-  const dispatch = useDispatch();
+  const [date, setDate] = useRecoilState(dateState);
+  const [showModal, setShowModal] = useRecoilState(showModalState);
+  const [todos, setTodos] = useRecoilState(todoState);
 
-  // 날짜를 클릭했을 때 date 상태에 설정 -> setSelectedDate 액션 디스패치하여 Redux store에 선택된 날짜를 저장한 후 모달 true
+  // 날짜를 클릭했을 때 date 상태에 설정 -> 모달 true
   const onClickDay = (date: Date) => {
     setDate(date);
-    dispatch(setSelectedDate(date.toISOString()));
     setShowModal(true);
   };
 
@@ -48,7 +45,7 @@ function CalendarPage() {
   // 캘린더에 todoList 표시
   const tileContent = ({ date, view }: { date: Date; view: string }) => {
     if (view === 'month') {
-      const todosForThisDate = todos.filter((todo: Todo) => {
+      const todosForThisDate = todos.filter((todo) => {
         const todoDate = new Date(todo.date);
         return (
           todoDate.getDate() === date.getDate() &&
@@ -60,7 +57,7 @@ function CalendarPage() {
       return (
         <div className="flex flex-col items-center">
           <div className="mt-2">
-            {todosForThisDate.map((todo: Todo) => (
+            {todosForThisDate.map((todo) => (
               <div
                 key={todo.id}
                 className={`p-1 rounded ${todo.color} mt-1 ${todo.completed ? 'opacity-40' : 'text-black'}`}
@@ -88,15 +85,15 @@ function CalendarPage() {
     >
       <Calendar
         onClickDay={onClickDay}
-        tileContent={tileContent}
         locale="ko-KR"
         formatDay={formatDay}
         tileClassName={tileClassName}
+        tileContent={tileContent}
         value={date}
       />
       {showModal && (
         <Modal closeModal={closeModal} selectedDate={date}>
-          <TodoListModal selectedDate={date} />
+          <TodoListModal />
         </Modal>
       )}
     </div>

@@ -1,45 +1,67 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../store/store';
-import { addTodo, editTodo, toggleTodo, deleteTodo } from '../store/todosSlice';
 import SelectTagModal from './SelectTagModal';
+import { useRecoilState } from 'recoil';
+import {
+  editTextState,
+  todoState,
+  editIdState,
+  selectedDateState,
+  isOpenState,
+  Todo
+} from '../atom/RecoilAtoms';
 
-interface TodoListModalProps {
-  selectedDate: Date;
-}
-
-function TodoListModal({ selectedDate }: TodoListModalProps) {
-  const dispatch = useDispatch();
-  const todos = useSelector((state: RootState) => state.todos.todos);
-  const [todo, setTodo] = useState('');
-  const [isOpen, setIsOpen] = useState(false);
+function TodoListModal() {
+  const [selectedDate, setSelectedDate] = useRecoilState(
+    selectedDateState || new Date()
+  );
+  const [todo, setTodo] = useRecoilState(todoState);
+  const [editId, setEditId] = useRecoilState(editIdState);
+  const [editText, setEditText] = useRecoilState(editTextState);
+  const [isOpen, setIsOpen] = useRecoilState(isOpenState);
   const [tag, setTag] = useState('');
   const [color, setColor] = useState('bg-gray-200');
   const inputRef = useRef<HTMLInputElement>(null);
-  const [editId, setEditId] = useState<number | null>(null);
-  const [editText, setEditText] = useState('');
+  const [inputText, setInputText] = useState('');
+  const [filteredTodos, setFilteredTodos] = useState<Todo[]>([]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (todo !== '' && selectedDate) {
-      dispatch(
-        addTodo({
-          text: todo,
-          tag,
-          color,
-          completed: false
-        })
-      );
-      setTodo('');
+    if (selectedDate) {
+      setTodo((prevTodo) => [
+        ...prevTodo,
+        {
+          id: prevTodo.length + 1,
+          text: inputText,
+          completed: false,
+          tag: tag,
+          color: color,
+          date: new Date(selectedDate)
+        }
+      ]);
+      setInputText('');
     }
   };
 
+  useEffect(() => {
+    if (!selectedDate) {
+      setSelectedDate(new Date());
+    }
+  }, []);
+
   // 모달에서는 오늘의 투두리스트 항목만 출력 -> todo의 날짜가 선택된 날짜와 같은지 확인
-  const filteredTodos = todos.filter(
-    (todo) =>
-      new Date(todo.date).setHours(0, 0, 0, 0) ===
-      new Date(selectedDate).setHours(0, 0, 0, 0)
-  );
+  useEffect(() => {
+    const newFilteredTodos = todo.filter(
+      (todo) =>
+        todo.date &&
+        selectedDate &&
+        new Date(todo.date).toISOString().slice(0, 10) ===
+          new Date(selectedDate).toISOString().slice(0, 10) // 일자만 비교,
+    );
+    // 상태 업데이트
+    setFilteredTodos(newFilteredTodos);
+  }, [selectedDate, todo]);
+  // toLocaleDateString() 메서드 대신 toISOString() 메서드를 사용,
+  // toISOString() 메서드는 날짜와 시간을 UTC 형식의 문자열로 변환하므로, 타임존에 관계없이 항상 동일한 결과를 반환
 
   // input 요소에 포커스를 주는 코드, 사용자가 태그를 선택한 후에도 입력필드에 포커스 유지.
   useEffect(() => {
@@ -54,8 +76,22 @@ function TodoListModal({ selectedDate }: TodoListModalProps) {
   };
 
   const handleSave = (id: number) => {
-    dispatch(editTodo({ id, text: editText }));
+    setTodo(
+      todo.map((todo) => (todo.id === id ? { ...todo, text: editText } : todo))
+    );
     setEditId(null);
+  };
+
+  const handleDelete = (id: number) => {
+    setTodo((prevTodo) => prevTodo.filter((todo) => todo.id !== id));
+  };
+
+  const handleToggle = (id: number) => {
+    setTodo((prevTodo) =>
+      prevTodo.map((todo) =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+      )
+    );
   };
 
   return (
@@ -113,7 +149,7 @@ function TodoListModal({ selectedDate }: TodoListModalProps) {
                       </button>
                       <button
                         className="mr-2"
-                        onClick={() => dispatch(deleteTodo(todo.id))}
+                        onClick={() => handleDelete(todo.id)}
                       >
                         삭제
                       </button>
@@ -122,7 +158,7 @@ function TodoListModal({ selectedDate }: TodoListModalProps) {
                     <input
                       type="checkbox"
                       checked={todo.completed}
-                      onChange={() => dispatch(toggleTodo(todo.id))}
+                      onChange={() => handleToggle(todo.id)}
                       className="mr-2 mt-1 checkbox border-gray-500"
                     />
                   )}
@@ -140,11 +176,13 @@ function TodoListModal({ selectedDate }: TodoListModalProps) {
           <input
             ref={inputRef}
             type="text"
-            value={todo}
-            onChange={(e) => setTodo(e.target.value)}
+            value={inputText}
+            onChange={(e) => setInputText(e.target.value)}
             className={`w-[380px] h-[48px] mt-10 p-2 text-sm text-black font-normal ${color} opacity-70 border border-gray-200 rounded-md outline-none`}
             placeholder="+ 할 일을 추가하세요"
-            onClick={() => setIsOpen(true)}
+            onClick={() => {
+              setIsOpen(true);
+            }}
           />
         </form>
         <SelectTagModal
