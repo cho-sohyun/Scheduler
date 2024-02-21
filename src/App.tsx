@@ -16,7 +16,7 @@ recoilPersist({
 function App() {
   return (
     <RecoilRoot>
-      <Router>
+      <Router basename="/Scheduler">
         <div className="wrap">
           <div className="container">
             <Header />
