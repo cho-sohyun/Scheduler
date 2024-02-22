@@ -80,7 +80,8 @@ function CalendarPage() {
         height: '700px',
         overflow: 'auto',
         scrollbarWidth: 'none',
-        msOverflowStyle: 'none'
+        msOverflowStyle: 'none',
+        marginTop: '12px'
       }}
       className="scrollbar-hide"
     >

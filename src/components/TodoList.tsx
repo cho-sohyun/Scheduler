@@ -76,7 +76,7 @@ function TodoList() {
         {todo.map((todo, index) => (
           <li
             key={index}
-            className={` w-[400px] h-[50px] flex justify-between items-center mt-2 p-2 pl-3 text-center text-black text-sm rounded-md opacity-60 ${todo.color}`}
+            className={` w-[95%] h-[50px] flex justify-between items-center mt-2 p-2 pl-3 text-center text-black text-sm rounded-md opacity-60 ${todo.color}`}
           >
             {editId === todo.id ? (
               <input
@@ -139,7 +139,7 @@ function TodoList() {
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
           type="text"
-          className={`w-[400px] h-[48px] flex justify-center items-center mt-4 p-2 text-sm text-black font-normal ${color} opacity-70 border border-gray-200 rounded-md outline-none`}
+          className={`w-[95%] h-[48px] flex justify-center items-center mt-4 p-2 text-sm text-black font-normal ${color} opacity-70 border border-gray-200 rounded-md outline-none`}
           placeholder="+ 할 일을 추가하세요"
           onClick={() => setIsOpen(true)}
         />

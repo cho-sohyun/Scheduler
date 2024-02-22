@@ -30,7 +30,7 @@ const Modal = ({ closeModal, children, selectedDate }: ModalProps) => {
         className="absolute top-0 left-0 w-full h-full bg-gray-400 opacity-50"
         onClick={closeModal}
       />
-      <div className="z-50 bg-white p-5 rounded-xl shadow-lg min-h-40">
+      <div className="w-[95%] z-50 bg-white p-5 rounded-xl shadow-lg min-h-40">
         <p className="ml-2 text-sm">
           {date} ({day})
         </p>

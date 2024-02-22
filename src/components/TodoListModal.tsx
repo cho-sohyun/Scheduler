@@ -126,7 +126,7 @@ function TodoListModal() {
             {filteredTodos.map((todo, index) => (
               <li
                 key={index}
-                className={` w-[380px] h-[50px] flex justify-between items-center mt-2 p-2 pl-3 text-center text-black text-sm rounded-md opacity-60 ${todo.color}`}
+                className={` w-full h-[50px] flex justify-between items-center mt-2 p-2 pl-3 text-center text-black text-sm rounded-md opacity-60 ${todo.color}`}
               >
                 {editId === todo.id ? (
                   <input
@@ -198,7 +198,7 @@ function TodoListModal() {
             type="text"
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
-            className={`w-[380px] h-[48px] mt-10 p-2 text-sm text-black font-normal ${color} opacity-70 border border-gray-200 rounded-md outline-none`}
+            className={`w-full h-[48px] mt-10 p-2 text-sm text-black font-normal ${color} opacity-70 border border-gray-200 rounded-md outline-none`}
             placeholder="+ 할 일을 추가하세요"
             onClick={() => {
               setIsOpen(true);

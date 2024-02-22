@@ -23,13 +23,8 @@ function DatePickerModal({
 
   return (
     <div className="z-10 fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white w-[420px] h-[440px] p-4 rounded-xl modal-box">
-        <div
-          className="font-medium text-3xl flex items-end justify-end cursor-pointer"
-          onClick={onClose}
-        >
-          &times;
-        </div>
+      <div className="bg-white w-full h-[440px] p-4 rounded-xl modal-box">
+        <div onClick={onClose}>&times;</div>
         <DatePicker
           inline
           locale={ko}

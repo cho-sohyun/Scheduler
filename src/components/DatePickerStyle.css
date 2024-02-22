@@ -11,13 +11,13 @@
 }
 
 .react-datepicker {
-  width: 400px !important;
+  width: 100% !important;
   height: 200px !important;
   border: none !important;
 }
 
 .react-datepicker__header {
-  width: 400px !important;
+  width: 100% !important;
   border-bottom: none !important;
   background: white !important;
   margin-top: 12px;
@@ -57,7 +57,7 @@
 /* 요일 */
 .react-datepicker__day-name {
   font-size: 14px !important;
-  width: 50px !important;
+  width: 45px !important;
   font-weight: 400 !important;
   color: #aaaaaa !important;
 }
@@ -65,7 +65,7 @@
 /* 일자*/
 .react-datepicker__day {
   font-size: 16px !important;
-  width: 50px !important;
+  width: 45px !important;
   padding: 4px !important;
   font-weight: 400 !important;
 }
