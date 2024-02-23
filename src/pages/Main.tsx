@@ -31,7 +31,7 @@ function Main() {
         </p>
         <div
           style={{
-            height: '500px',
+            height: '700px',
             overflow: 'auto',
             scrollbarWidth: 'none',
             msOverflowStyle: 'none'

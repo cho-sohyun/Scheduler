@@ -64,7 +64,7 @@ function CalendarPage() {
                 className={`p-1 rounded ${todo.color} mt-1 ${todo.completed ? 'opacity-40' : 'text-black'}`}
               >
                 <p className="text-[10px] text-nowrap">
-                  {todo.text.substring(0, 5)}
+                  {todo.text.substring(0, 4)}
                 </p>
               </div>
             ))}
